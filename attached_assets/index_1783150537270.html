@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+
+<meta charset="UTF-8">
+
+<!-- Google AdSense -->
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6507060960933974"
+crossorigin="anonymous"></script>
+
+<!-- Google Search Console -->
+<meta name="google-site-verification"
+content="vJrcHiqFkvYkdnGkuf2RDUCIEJvUlj7uc0U2BhkDDmk" />
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1">
+
+<title>
+日本退稅計算機｜免稅＋手續費完整計算
+</title>
+
+<meta name="description"
+content="日本退稅計算機，快速計算日本免稅、百貨公司1.55%手續費、信用卡海外交易費與日幣換算台幣。">
+
+<meta name="keywords"
+content="日本退稅計算機,日本退稅,日本免稅,日本退稅手續費,日本旅遊退稅">
+
+<link rel="canonical"
+href="https://japantaxcalc.github.io/">
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+max-width:800px;
+margin:auto;
+padding:20px;
+background:#f5f5f5;
+line-height:1.7;
+color:#222;
+}
+
+h1{
+font-size:42px;
+margin-top:30px;
+margin-bottom:10px;
+}
+
+.subtitle{
+font-size:18px;
+color:#555;
+margin-bottom:30px;
+}
+
+.card{
+background:white;
+padding:24px;
+border-radius:16px;
+margin-top:20px;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+input,
+select,
+button{
+width:100%;
+padding:14px;
+font-size:18px;
+margin-top:8px;
+margin-bottom:20px;
+border-radius:10px;
+border:1px solid #ccc;
+box-sizing:border-box;
+}
+
+button{
+background:#e53935;
+color:white;
+font-weight:bold;
+border:none;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.big{
+font-size:32px;
+font-weight:bold;
+color:#e53935;
+}
+
+.green{
+font-size:28px;
+font-weight:bold;
+color:#2e7d32;
+}
+
+.note{
+font-size:14px;
+color:#666;
+margin-top:-10px;
+margin-bottom:15px;
+}
+
+ul{
+padding-left:20px;
+}
+
+footer{
+margin-top:40px;
+text-align:center;
+font-size:14px;
+padding-bottom:30px;
+}
+
+footer a{
+margin:0 6px;
+text-decoration:none;
+color:#1565c0;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media(max-width:600px){
+
+h1{
+font-size:32px;
+}
+
+.big{
+font-size:26px;
+}
+
+.green{
+font-size:24px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>日本退稅計算機</h1>
+
+<p class="subtitle">
+快速計算日本免稅、百貨公司手續費、
+信用卡海外交易費與日幣換算台幣
+</p>
+
+<div class="card">
+
+<h2>立即計算</h2>
+
+<label>金額（日圓）</label>
+
+<input id="price"
+type="number"
+placeholder="例如 23100">
+
+<label>日本消費稅率</label>
+
+<select id="taxRate">
+
+<option value="1.1">
+10%
+</option>
+
+<option value="1.08">
+8%
+</option>
+
+</select>
+  
+<label>價格類型</label>
+
+<select id="taxType">
+
+<option value="tax">
+含稅
+</option>
+
+<option value="noTax">
+未稅
+</option>
+
+</select>
+
+<label>店鋪手續費 (%)</label>
+
+<input id="shopFee"
+type="number"
+value="0">
+
+<div class="note">
+常見手續費：
+藥妝店0%、百貨公司約1.55%、部分商店1%~2%
+</div>
+
+<label>信用卡手續費 (%)</label>
+
+<input id="cardFee"
+type="number"
+value="1.5">
+
+<div class="note">
+海外刷卡通常約1%~2%
+</div>
+
+<label>匯率（1日圓 = 台幣）</label>
+
+<input id="rate"
+type="number"
+step="0.01"
+value="0.20">
+
+<div class="note">
+預設匯率為 0.20，僅供參考，可依照銀行、信用卡或即時匯率自行調整。
+</div>  
+  
+<button onclick="calc()">
+計算退稅
+</button>
+
+</div>
+
+<div id="result"
+style="display:none;">
+
+<div class="card">
+
+<h2>💰 退稅金額（你省了）</h2>
+
+<div id="save"
+class="big"></div>
+
+<p class="note">
+與含稅價格相比
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>📊 計算明細</h2>
+
+<p>
+原始價格：
+<span id="orig"></span>
+</p>
+
+<p>
+未稅價格：
+<span id="noTax"></span>
+</p>
+
+<p>
+店鋪手續費：
+<span id="shopCost"></span>
+</p>
+
+<p>
+信用卡手續費：
+<span id="cardCost"></span>
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>💳 最終支付</h2>
+
+<p id="finalYen"
+class="green"></p>
+
+<p id="twd"></p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>日本退稅教學</h2>
+
+<p>
+第一次去日本購物不知道如何退稅？
+了解日本免稅門檻、2026退稅新制、
+百貨公司手續費與退稅流程。
+</p>
+
+<p>
+<a href="guide.html">
+閱讀完整日本退稅教學
+</a>
+</p>
+  
+  
+<h2>日本退稅怎麼算？簡單快速看！</h2>
+
+<p>
+日本目前主要有 8% 與 10% 兩種消費稅率，
+一般物品（衣物、電器、包包）：退 10%；
+消耗品（食品、藥妝）：退 8% 或 10%。
+外國旅客在日本購物滿5000日圓以上，
+通常即可享有免稅優惠。
+</p>
+
+<p>
+最常見的退稅公式為：
+</p>
+
+<p>
+10% 稅率：
+含稅價格 ÷ 1.1 = 未稅價格
+</p>
+  
+<p>  
+8% 稅率：
+含稅價格 ÷ 1.08 = 未稅價格
+</p>
+
+<p>
+部分百貨公司可能收取約1.55%退稅手續費，
+海外信用卡也可能收取1%~2%交易手續費。
+</p>
+
+<p>
+本工具可快速計算：
+</p>
+
+<ul>
+
+<li>日本退稅金額</li>
+
+<li>百貨公司退稅手續費</li>
+
+<li>信用卡海外交易費</li>
+
+<li>日幣換算台幣</li>
+
+</ul>
+
+</div>
+
+<div class="card">
+
+<h2>FAQ</h2>
+
+<p>
+<b>日本退稅是幾%？</b><br>
+日本主要有 8% 與 10% 兩種消費稅率，
+一般商品多為 10%，
+部分食品與飲料可能適用 8%。
+<br>
+延伸閱讀：
+<a href="japan-tax-8-vs-10.html">
+日本消費稅 8% 與 10% 差異
+</a>
+</p>
+
+<p>
+<b>百貨公司為什麼退不到10%？</b><br>
+部分百貨公司會收取約1%~1.55%退稅手續費。
+</p>
+
+<p>
+<b>信用卡海外交易會加價嗎？</b><br>
+大部分銀行會收取約1%~2%海外交易手續費。
+</p>
+
+<p>
+<b>日本退稅最低門檻是多少？</b><br>
+一般為5000日圓以上。
+</p>
+
+<p>
+<b>日本退稅一定要在機場嗎？</b><br>
+目前日本大部分免稅店， 都能直接於購物時免稅， 因此現在通常不需要特地到機場退稅。
+<br>
+延伸閱讀：
+<a href="japan-airport-tax-refund.html">
+日本機場退稅流程教學
+</a>
+</p>
+  
+</div>
+
+<footer>
+
+<a href="about.html">
+關於我們
+</a>
+
+|
+
+<a href="privacy.html">
+隱私政策
+</a>
+
+|
+
+<a href="guide.html">
+日本退稅完整教學
+</a>
+
+|
+
+<a href="japan-tax-2026.html">
+2026 日本退稅新制
+</a>
+
+|
+
+<a href="japan-tax-8-vs-10.html">
+日本消費稅 8% 與 10% 差異
+</a>
+
+|
+  
+<a href="yen-to-twd.html">
+日幣台幣換算
+</a>
+
+|
+
+<a href="japan-card-fee.html">
+海外刷卡手續費
+</a>
+
+|
+  
+<a href="sitemap.xml">
+Sitemap
+</a>
+
+</footer>
+
+<script>
+
+function calc(){
+
+let price =
+parseFloat(document.getElementById("price").value)
+
+let taxType =
+document.getElementById("taxType").value
+
+let shopFee =
+parseFloat(document.getElementById("shopFee").value)/100
+
+let cardFee =
+parseFloat(document.getElementById("cardFee").value)/100
+
+let rate =
+parseFloat(document.getElementById("rate").value)
+
+if(isNaN(price) || isNaN(rate)){
+
+alert("請輸入正確數字")
+
+return
+
+}
+
+let taxRate =
+parseFloat(document.getElementById("taxRate").value)
+
+let noTax =
+taxType=="tax"
+? price/taxRate
+: price
+
+let shopCost =
+noTax*shopFee
+
+let base =
+noTax+shopCost
+
+let cardCost =
+base*cardFee
+
+let finalYen =
+base+cardCost
+
+let save =
+price-noTax
+
+let twd =
+finalYen*rate
+
+document.getElementById("result").style.display="block"
+
+document.getElementById("save").innerHTML =
+Math.round(save).toLocaleString()
++ " 日圓"
+
+document.getElementById("orig").innerHTML =
+Math.round(price).toLocaleString()
++ " 日圓"
+
+document.getElementById("noTax").innerHTML =
+Math.round(noTax).toLocaleString()
++ " 日圓"
+
+document.getElementById("shopCost").innerHTML =
+Math.round(shopCost).toLocaleString()
++ " 日圓"
+
+document.getElementById("cardCost").innerHTML =
+Math.round(cardCost).toLocaleString()
++ " 日圓"
+
+document.getElementById("finalYen").innerHTML =
+Math.round(finalYen).toLocaleString()
++ " 日圓"
+
+document.getElementById("twd").innerHTML =
+"約台幣 "
++ Math.round(twd).toLocaleString()
++ " 元"
+
+}
+
+</script>
+
+</body>
+</html>
