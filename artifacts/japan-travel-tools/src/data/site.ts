@@ -36,6 +36,12 @@ export const TOOLS: ToolMeta[] = [
     title: "海外刷卡手續費計算機",
     description: "估算日本刷卡的海外交易手續費，換算實際入帳的台幣金額。",
   },
+  {
+    path: "/shopping-trip-estimator",
+    emoji: "🧳",
+    title: "購物清單試算器",
+    description: "把整趟旅程的購物清單一次輸入，自動加總退稅、刷卡手續費與台幣預算。",
+  },
 ];
 
 export const ARTICLES: ArticleMeta[] = [
@@ -85,6 +91,7 @@ export const NAV_LINKS = [
   { path: "/", label: "退稅計算機" },
   { path: "/yen-to-twd", label: "匯率換算" },
   { path: "/japan-card-fee", label: "刷卡手續費" },
+  { path: "/shopping-trip-estimator", label: "購物清單試算" },
   { path: "/guide", label: "退稅教學" },
   { path: "/about", label: "關於我們" },
 ];
@@ -93,6 +100,7 @@ export const FOOTER_LINKS = [
   { path: "/", label: "日本退稅計算機" },
   { path: "/yen-to-twd", label: "日幣台幣換算" },
   { path: "/japan-card-fee", label: "海外刷卡手續費" },
+  { path: "/shopping-trip-estimator", label: "購物清單試算器" },
   { path: "/guide", label: "退稅完整教學" },
   { path: "/japan-tax-2026", label: "2026 退稅新制" },
   { path: "/japan-tax-8-vs-10", label: "消費稅 8% vs 10%" },

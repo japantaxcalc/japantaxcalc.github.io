@@ -6,6 +6,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import YenToTwd from "@/pages/yen-to-twd";
 import JapanCardFee from "@/pages/japan-card-fee";
+import ShoppingTripEstimator from "@/pages/shopping-trip-estimator";
 import JapanTax8Vs10 from "@/pages/japan-tax-8-vs-10";
 import JapanTax2026 from "@/pages/japan-tax-2026";
 import JapanDutyFreeGuide from "@/pages/japan-duty-free-guide";
@@ -23,6 +24,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/yen-to-twd" component={YenToTwd} />
       <Route path="/japan-card-fee" component={JapanCardFee} />
+      <Route path="/shopping-trip-estimator" component={ShoppingTripEstimator} />
       <Route path="/japan-tax-8-vs-10" component={JapanTax8Vs10} />
       <Route path="/japan-tax-2026" component={JapanTax2026} />
       <Route path="/japan-duty-free-guide" component={JapanDutyFreeGuide} />
