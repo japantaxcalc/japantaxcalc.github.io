@@ -1,4 +1,5 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { useEffect } from "react";
+import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,6 +18,23 @@ import Privacy from "@/pages/privacy";
 import Contact from "@/pages/contact";
 
 const queryClient = new QueryClient();
+
+function LegacyHtmlRedirect() {
+  const [location, navigate] = useLocation();
+
+  useEffect(() => {
+    if (!location.endsWith(".html")) return;
+
+    let target = location.replace(/\.html$/, "");
+    if (target === "" || target === "/index") {
+      target = "/";
+    }
+
+    navigate(target, { replace: true });
+  }, [location, navigate]);
+
+  return null;
+}
 
 function Router() {
   return (
@@ -43,6 +61,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+          <LegacyHtmlRedirect />
           <Router />
         </WouterRouter>
         <Toaster />
