@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>日本旅遊工具箱</title>
+    <script>
+      // GitHub Pages SPA fallback: encode the requested path/query/hash into
+      // the query string, redirect to the site root, and let index.html's
+      // inline script decode it back into the real URL via history.replaceState.
+      (function () {
+        var l = window.location;
+        var redirectUrl =
+          l.protocol +
+          "//" +
+          l.hostname +
+          (l.port ? ":" + l.port : "") +
+          "/?redirect=" +
+          encodeURIComponent(l.pathname + l.search + l.hash);
+        l.replace(redirectUrl);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
