@@ -46,6 +46,25 @@ jobs:
       - name: Add .nojekyll
         run: touch artifacts/japan-travel-tools/dist/public/.nojekyll
 
+      - name: Create per-route index.html copies (SPA HTTP 200 fix)
+        run: |
+          DIST=artifacts/japan-travel-tools/dist/public
+          for route in \
+            yen-to-twd \
+            japan-card-fee \
+            shopping-trip-estimator \
+            guide \
+            japan-tax-2026 \
+            japan-tax-8-vs-10 \
+            japan-duty-free-guide \
+            japan-airport-tax-refund \
+            about \
+            privacy \
+            contact; do
+            mkdir -p "$DIST/$route"
+            cp "$DIST/index.html" "$DIST/$route/index.html"
+          done
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
