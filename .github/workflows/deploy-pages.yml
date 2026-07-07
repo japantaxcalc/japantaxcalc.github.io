@@ -46,7 +46,7 @@ jobs:
       - name: Add .nojekyll
         run: touch artifacts/japan-travel-tools/dist/public/.nojekyll
 
-      - name: Create per-route index.html copies (SPA HTTP 200 fix)
+      - name: Create per-route files (SPA HTTP 200 fix for clean URLs and legacy .html URLs)
         run: |
           DIST=artifacts/japan-travel-tools/dist/public
           for route in \
@@ -63,6 +63,7 @@ jobs:
             contact; do
             mkdir -p "$DIST/$route"
             cp "$DIST/index.html" "$DIST/$route/index.html"
+            cp "$DIST/index.html" "$DIST/$route.html"
           done
 
       - name: Upload Pages artifact
