@@ -46,25 +46,9 @@ jobs:
       - name: Add .nojekyll
         run: touch artifacts/japan-travel-tools/dist/public/.nojekyll
 
-      - name: Create per-route files (SPA HTTP 200 fix for clean URLs and legacy .html URLs)
-        run: |
-          DIST=artifacts/japan-travel-tools/dist/public
-          for route in \
-            yen-to-twd \
-            japan-card-fee \
-            shopping-trip-estimator \
-            guide \
-            japan-tax-2026 \
-            japan-tax-8-vs-10 \
-            japan-duty-free-guide \
-            japan-airport-tax-refund \
-            about \
-            privacy \
-            contact; do
-            mkdir -p "$DIST/$route"
-            cp "$DIST/index.html" "$DIST/$route/index.html"
-            cp "$DIST/index.html" "$DIST/$route.html"
-          done
+      - name: Prerender every page (each URL gets its own full HTML)
+        working-directory: artifacts/japan-travel-tools
+        run: node scripts/prerender.mjs
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
