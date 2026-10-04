@@ -7,11 +7,11 @@ export default function AboutSection() {
         <div className="rounded-3xl border border-[var(--jp-border)] bg-[var(--jp-card)] p-8 sm:p-10">
           <p className="text-xs font-medium tracking-wide text-[var(--jp-accent)]">關於這個網站</p>
           <h2 className="mt-2 font-serif text-2xl font-semibold text-[var(--jp-ink)]">
-            由一群常跑日本的旅人，整理給你的省錢筆記
+            把日本官方的退稅規則，整理成算得出來的工具
           </h2>
           <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[var(--jp-ink-muted)]">
-            日本旅遊工具箱從 2024 年開始整理日本購物退稅、匯率換算與海外刷卡手續費的資訊，內容來自日本國稅廳公開資料、各百貨公司公告的手續費率，以及我們每次赴日購物的實際經驗。我們持續追蹤日本稅制與退稅政策的變化（包含
-            2026 年即將上路的先付後退新制），並定期更新文章內容與計算邏輯，希望讓每一位第一次到日本自由行的旅人，都能把每一筆花費算得清清楚楚。
+            日本旅遊工具箱由 Miff 製作與維護，內容整理自日本觀光廳、國稅廳公開的免稅與消費稅資料，以及各百貨公司公告的退稅手續費率。日本自
+            2026 年 11 月 1 日起改採先付後退的退稅新制，網站會持續追蹤官方公告，更新文章與計算邏輯，幫第一次去日本自由行的旅人，把每一筆花費算清楚。
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
