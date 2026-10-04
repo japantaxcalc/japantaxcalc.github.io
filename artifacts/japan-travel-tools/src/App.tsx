@@ -16,6 +16,7 @@ import Guide from "@/pages/guide";
 import About from "@/pages/about";
 import Privacy from "@/pages/privacy";
 import Contact from "@/pages/contact";
+import Disclaimer from "@/pages/disclaimer";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/contact" component={Contact} />
+      <Route path="/disclaimer" component={Disclaimer} />
       <Route component={NotFound} />
     </Switch>
   );
