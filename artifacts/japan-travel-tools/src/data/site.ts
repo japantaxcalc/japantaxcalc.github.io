@@ -109,4 +109,5 @@ export const FOOTER_LINKS = [
   { path: "/about", label: "關於我們" },
   { path: "/contact", label: "聯絡我們" },
   { path: "/privacy", label: "隱私政策" },
+  { path: "/disclaimer", label: "免責聲明" },
 ];
