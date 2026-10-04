@@ -27,6 +27,7 @@ const ROUTES = [
   "/about",
   "/privacy",
   "/contact",
+  "/disclaimer",
 ];
 
 const TYPES = {
