@@ -20,6 +20,28 @@ function setMeta(attr: "name" | "property", key: string, content: string) {
   el.setAttribute("content", content);
 }
 
+// Structured data for tutorial articles, credited to the site author shown on /about
+export function articleJsonLd(a: {
+  path: string;
+  headline: string;
+  description: string;
+  published: string;
+  modified: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: a.headline,
+    description: a.description,
+    author: { "@type": "Person", name: "Miff", url: `${SITE_URL}/about` },
+    publisher: { "@type": "Organization", name: "日本旅遊工具箱", url: SITE_URL },
+    datePublished: a.published,
+    dateModified: a.modified,
+    mainEntityOfPage: SITE_URL + a.path,
+    inLanguage: "zh-TW",
+  };
+}
+
 // /guide/, /guide.html and /guide are the same page; canonical is always /guide
 function cleanPath(pathname: string) {
   const path = pathname.replace(/\.html$/, "").replace(/\/+$/, "");
