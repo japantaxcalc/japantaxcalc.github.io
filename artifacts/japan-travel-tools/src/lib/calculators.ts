@@ -38,6 +38,73 @@ export function calcTaxRefund(input: TaxRefundInput): TaxRefundResult {
   return { original: price, noTax, savedAmount, shopFeeCost, cardFeeCost, finalYen, finalTwd };
 }
 
+// 2026-11-01 起買的免稅品改成「先付後退」：結帳先付含稅價，出境時海關確認後才退稅
+export const NEW_SYSTEM_START = "2026-11-01";
+// 同一天、同一家店，未稅合計 5,000 日圓以上才能免稅（新制門檻不變）
+export const TAX_FREE_MIN = 5000;
+
+export type RefundSystem = "old" | "new";
+
+// 依日本時間的今天決定預設制度（預渲染在 UTC 的主機上執行，所以要指定時區）
+export function defaultRefundSystem(now = new Date()): RefundSystem {
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo" }).format(now);
+  return today >= NEW_SYSTEM_START ? "new" : "old";
+}
+
+export function splitPrice(price: number, taxRateDivisor: number, isTaxIncluded: boolean) {
+  const noTax = isTaxIncluded ? price / taxRateDivisor : price;
+  const taxIncluded = isTaxIncluded ? price : price * taxRateDivisor;
+  return { noTax, taxIncluded };
+}
+
+// 未稅金額還差多少才到門檻；0 表示已達門檻（先四捨五入到小數 2 位，避免 5500 ÷ 1.1 算出 4999.999…）
+export function taxFreeShortfall(noTax: number): number {
+  const rounded = Math.round(noTax * 100) / 100;
+  return Math.max(0, Math.ceil(TAX_FREE_MIN - rounded));
+}
+
+export interface NewSystemRefundResult {
+  original: number;
+  noTax: number;
+  taxIncluded: number;
+  taxAmount: number;
+  refundFeeCost: number;
+  refundYen: number;
+  cardFeeCost: number;
+  paidYen: number;
+  paidTwd: number;
+  finalYen: number;
+  finalTwd: number;
+  cardFeeOnTax: number;
+}
+
+// 新制：先付含稅價（海外手續費用含稅金額算），出境後拿回「稅額 − 退稅手續費」
+export function calcTaxRefundNew(input: TaxRefundInput): NewSystemRefundResult {
+  const { price, taxRateDivisor, isTaxIncluded, shopFeePercent, cardFeePercent, exchangeRate } =
+    input;
+  const { noTax, taxIncluded } = splitPrice(price, taxRateDivisor, isTaxIncluded);
+  const taxAmount = taxIncluded - noTax;
+  const refundFeeCost = noTax * (shopFeePercent / 100);
+  const refundYen = taxAmount - refundFeeCost;
+  const cardFeeCost = taxIncluded * (cardFeePercent / 100);
+  const paidYen = taxIncluded + cardFeeCost;
+  const finalYen = paidYen - refundYen;
+  return {
+    original: price,
+    noTax,
+    taxIncluded,
+    taxAmount,
+    refundFeeCost,
+    refundYen,
+    cardFeeCost,
+    paidYen,
+    paidTwd: paidYen * exchangeRate,
+    finalYen,
+    finalTwd: finalYen * exchangeRate,
+    cardFeeOnTax: taxAmount * (cardFeePercent / 100),
+  };
+}
+
 export interface CardFeeResult {
   original: number;
   feeCost: number;
