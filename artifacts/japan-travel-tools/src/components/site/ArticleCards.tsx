@@ -17,16 +17,24 @@ export default function ArticleCards({
   return (
     <section className="border-b border-[var(--jp-border)] bg-[var(--jp-hero)] py-14">
       <div className="mx-auto max-w-5xl px-5">
-        <div className="mb-8 max-w-xl">
-          <h2 className="font-serif text-2xl font-semibold text-[var(--jp-ink)]">{title}</h2>
-          <p className="mt-2 text-sm leading-relaxed text-[var(--jp-ink-muted)]">{description}</p>
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+          <div className="max-w-xl">
+            <h2 className="font-serif text-2xl font-semibold text-[var(--jp-ink)]">{title}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--jp-ink-muted)]">{description}</p>
+          </div>
+          <Link
+            href="/blog"
+            className="shrink-0 text-sm font-medium text-[var(--jp-accent)] underline underline-offset-4"
+          >
+            看全部文章 →
+          </Link>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          {articles.slice(0, 4).map((article) => (
+          {articles.map((article) => (
             <Link
               key={article.path}
               href={article.path}
-              className="group flex flex-col rounded-2xl border border-[var(--jp-border)] bg-[var(--jp-card)] p-5 transition-all hover:-translate-y-0.5 hover:border-[var(--jp-ink)]/40 hover:shadow-md"
+              className="group flex flex-col rounded-2xl border border-[var(--jp-border)] bg-[var(--jp-card)] p-5 transition-all hover:-translate-y-0.5 hover:border-[var(--jp-ink)]/40 hover:shadow-md sm:odd:last:col-span-2"
             >
               <span className="inline-flex w-fit items-center rounded-full bg-[var(--jp-accent-soft)] px-2.5 py-0.5 text-xs font-medium text-[var(--jp-accent)]">
                 {article.category}
