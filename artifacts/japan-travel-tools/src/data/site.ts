@@ -92,7 +92,7 @@ export const NAV_LINKS = [
   { path: "/yen-to-twd", label: "匯率換算" },
   { path: "/japan-card-fee", label: "刷卡手續費" },
   { path: "/shopping-trip-estimator", label: "購物清單試算" },
-  { path: "/guide", label: "退稅教學" },
+  { path: "/blog", label: "文章" },
   { path: "/about", label: "關於我們" },
 ];
 
@@ -106,6 +106,7 @@ export const FOOTER_LINKS = [
   { path: "/japan-tax-8-vs-10", label: "消費稅 8% vs 10%" },
   { path: "/japan-duty-free-guide", label: "免稅店攻略" },
   { path: "/japan-airport-tax-refund", label: "機場退稅流程" },
+  { path: "/blog", label: "全部文章" },
   { path: "/about", label: "關於我們" },
   { path: "/contact", label: "聯絡我們" },
   { path: "/privacy", label: "隱私政策" },
