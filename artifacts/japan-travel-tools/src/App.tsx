@@ -17,6 +17,8 @@ import About from "@/pages/about";
 import Privacy from "@/pages/privacy";
 import Contact from "@/pages/contact";
 import Disclaimer from "@/pages/disclaimer";
+import Blog from "@/pages/blog";
+import BlogPost from "@/pages/blog-post";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +55,8 @@ function Router() {
       <Route path="/privacy" component={Privacy} />
       <Route path="/contact" component={Contact} />
       <Route path="/disclaimer" component={Disclaimer} />
+      <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogPost} />
       <Route component={NotFound} />
     </Switch>
   );
