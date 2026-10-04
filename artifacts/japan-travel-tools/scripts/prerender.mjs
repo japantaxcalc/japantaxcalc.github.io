@@ -4,14 +4,20 @@
 // This replaces the old step that copied the same empty index.html to every route.
 import { createServer } from "node:http";
 import { existsSync } from "node:fs";
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, readdir, writeFile, mkdir } from "node:fs/promises";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer-core";
 
-const DIST = resolve(dirname(fileURLToPath(import.meta.url)), "../dist/public");
+const APP = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const DIST = join(APP, "dist/public");
 const SITE_URL = "https://japantaxcalc.github.io";
 const PORT = 4173;
+
+// Every blog post is a .md file in src/content/blog; its file name is the URL
+const BLOG_POSTS = (await readdir(join(APP, "src/content/blog")))
+  .filter((f) => f.endsWith(".md"))
+  .map((f) => `/blog/${f.replace(/\.md$/, "")}`);
 
 // Keep in sync with the <Route> list in src/App.tsx and public/sitemap.xml
 const ROUTES = [
@@ -28,6 +34,8 @@ const ROUTES = [
   "/privacy",
   "/contact",
   "/disclaimer",
+  "/blog",
+  ...BLOG_POSTS,
 ];
 
 const TYPES = {
@@ -109,6 +117,7 @@ try {
         await writeFile(join(DIST, "index.html"), html);
       } else {
         const name = route.slice(1);
+        await mkdir(dirname(join(DIST, name)), { recursive: true }); // blog/ for /blog/<post>
         await writeFile(join(DIST, `${name}.html`), html); // serves /guide (and /guide.html)
         await mkdir(join(DIST, name), { recursive: true });
         await writeFile(join(DIST, name, "index.html"), html); // serves /guide/
