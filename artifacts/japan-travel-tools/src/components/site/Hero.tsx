@@ -1,14 +1,16 @@
 import type { ReactNode } from "react";
+import { Link } from "wouter";
 
 interface HeroProps {
   eyebrow?: string;
   title: string;
   description: string;
   updated?: string;
+  author?: string;
   children?: ReactNode;
 }
 
-export default function Hero({ eyebrow, title, description, updated, children }: HeroProps) {
+export default function Hero({ eyebrow, title, description, updated, author, children }: HeroProps) {
   return (
     <section className="relative overflow-hidden border-b border-[var(--jp-border)] bg-[var(--jp-hero)]">
       <div
@@ -30,8 +32,19 @@ export default function Hero({ eyebrow, title, description, updated, children }:
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--jp-ink-muted)] sm:text-lg">
           {description}
         </p>
-        {updated && (
-          <p className="mt-3 text-xs text-[var(--jp-ink-faint)]">最後更新：{updated}</p>
+        {(author || updated) && (
+          <p className="mt-3 text-xs text-[var(--jp-ink-faint)]">
+            {author && (
+              <>
+                文／
+                <Link href="/about" className="underline underline-offset-2">
+                  {author}
+                </Link>
+              </>
+            )}
+            {author && updated && "・"}
+            {updated && <>最後更新：{updated}</>}
+          </p>
         )}
         {children}
       </div>
