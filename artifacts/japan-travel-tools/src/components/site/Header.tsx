@@ -1,13 +1,17 @@
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { NAV_LINKS, SITE_NAME, SITE_TAGLINE } from "@/data/site";
+import { ARTICLES, NAV_LINKS, SITE_NAME, SITE_TAGLINE } from "@/data/site";
 
 export default function Header() {
   const [location] = useLocation();
   const [open, setOpen] = useState(false);
-  // "文章" stays highlighted on every /blog/<post> page too
-  const isActive = (path: string) => location === path || location.startsWith(`${path}/`);
+  // /guide/ is the same page as /guide
+  const here = location.replace(/\/+$/, "") || "/";
+  // "文章" covers everything listed on /blog: the blog posts and the five tutorials
+  const isActive = (path: string) =>
+    here === path ||
+    (path === "/blog" && (here.startsWith("/blog/") || ARTICLES.some((a) => a.path === here)));
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--jp-border)] bg-[var(--jp-paper)]/95 backdrop-blur">
