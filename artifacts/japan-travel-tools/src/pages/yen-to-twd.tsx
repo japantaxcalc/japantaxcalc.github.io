@@ -16,38 +16,55 @@ import {
 } from "@/lib/calculators";
 import { useSeo } from "@/lib/seo";
 
-const REFERENCE_FAQS = [
-  { yen: 22000, twd: 4400 },
-  { yen: 24200, twd: 4840 },
-  { yen: 3990, twd: 798 },
-  { yen: 50000, twd: 10000 },
-  { yen: 10780, twd: 2156 },
-  { yen: 5990, twd: 1198 },
-  { yen: 34100, twd: 6820 },
-  { yen: 42500, twd: 8500 },
-  { yen: 24750, twd: 4950 },
-  { yen: 17400, twd: 3480 },
-  { yen: 100000, twd: 20000 },
+const linkClass = "text-[var(--jp-accent)] underline";
+const strong = "text-[var(--jp-ink)]";
+
+// 台灣多數信用卡的海外交易手續費：國際組織 1% ＋ 發卡銀行 0.5%
+const CARD_FEE = 0.015;
+
+const FAQS = [
+  {
+    q: "日本刷卡匯率怎麼算？",
+    a: "用 Visa、Mastercard、JCB 等信用卡國際組織在結匯日的匯率換成台幣，再加上發卡銀行的海外交易手續費，台灣多數信用卡是 1.5%。所以刷卡當下自己算的金額，和帳單上的金額可能會差一點。",
+  },
+  {
+    q: "去日本刷卡還是換現金比較划算？",
+    a: "沒有所有情況都適用的單一答案。比較時可以同時考慮信用卡匯率、海外交易手續費、現金換匯成本，以及日本商店是否接受信用卡。在車站售票機儲值交通卡、鄉下的小店和民宿，常常還是只收現金。",
+  },
+  {
+    q: "日本標價要用含稅還是未稅金額換算？",
+    a: "用實際要付的含稅價，也就是標示「税込」的金額。有些標價會把未稅價寫得比較大，看到「税抜」或「本体価格」就是未稅價，結帳時還要再加 8% 或 10% 的消費稅。",
+  },
+  {
+    q: "刷卡時被問要用日圓還是台幣，要選哪個？",
+    a: "選日圓。選台幣就是 DCC（動態貨幣轉換），匯率由店家那邊決定，台灣的發卡銀行一樣會收 1.5% 的海外交易手續費。",
+  },
+];
+
+const SOURCES = [
+  { href: "https://rate.bot.com.tw/xrt?Lang=zh-TW", label: "臺灣銀行：牌告匯率" },
+  {
+    href: "https://www.esunbank.com/zh-tw/about/faq/content?q=credit_card%2F018",
+    label: "玉山銀行：持信用卡在國外消費會收取什麼費用？",
+  },
+  {
+    href: "https://service.ctbcbank.com/FAQ/Page01?kmid=4724",
+    label: "中國信託：國外交易手續費如何收取？",
+  },
 ];
 
 export default function YenToTwd() {
   useSeo({
-    title:
-      "日幣台幣換算｜日圓換台幣計算機｜22000日幣等於多少台幣？",
+    title: "日幣台幣換算｜日圓換台幣計算機，可自訂匯率",
     description:
-      "日幣台幣換算工具，快速查詢 22000、24200、3990、50000 日幣等於多少台幣。支援日本旅遊購物、日圓換台幣與常見日幣金額換算",
+      "輸入日幣金額和自己的匯率，換算成台幣。附常見金額換算表（跟著你輸入的匯率更新、含刷卡 1.5% 手續費），以及換現金、刷卡實際用的匯率怎麼看。",
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: REFERENCE_FAQS.map((r) => ({
+      mainEntity: FAQS.map((f) => ({
         "@type": "Question",
-        name: `${formatNumber(r.yen)}日幣等於多少台幣？`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `以匯率 0.20 計算，${formatNumber(
-            r.yen
-          )} 日幣約等於 ${formatNumber(r.twd)} 元台幣。`,
-        },
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
       })),
     },
   });
@@ -55,6 +72,11 @@ export default function YenToTwd() {
   const [yen, setYen] = useState("10000");
   const [rate, setRate] = useState("0.20");
   const [twd, setTwd] = useState<number | null>(null);
+
+  // 換算表跟著輸入的匯率更新；匯率還沒輸入完整時先用 0.20
+  const typedRate = parseFloat(rate);
+  const tableRate = typedRate > 0 ? typedRate : 0.2;
+  const tableRateLabel = typedRate > 0 ? rate.trim() : "0.20";
 
   function handleConvert() {
     const yenNum = parseFloat(yen);
@@ -139,23 +161,6 @@ export default function YenToTwd() {
       <ToolCards currentPath="/yen-to-twd" />
 
       <Section>
-        {/* Step 2：把高曝光搜尋需求放到頁面前段 */}
-        <ContentCard title="22000日幣等於多少台幣？">
-          <p>
-            以匯率 0.20 計算，<strong>22,000 日幣約等於 4,400 元台幣</strong>。
-          </p>
-
-          <p>
-            實際換算結果會依日圓對台幣的匯率而變動。如果是日本購物或刷卡，
-            還可能受到信用卡海外交易手續費、店家退稅手續費等因素影響。
-          </p>
-
-          <p>
-            如果你有自己的匯率，可以直接在上方日幣台幣換算工具輸入金額與匯率，
-            計算實際換算結果。
-          </p>
-        </ContentCard>
-
         <ContentCard title="日幣台幣怎麼換算？">
           <p>
             日幣換算台幣的基本公式很簡單：
@@ -168,166 +173,81 @@ export default function YenToTwd() {
           </div>
 
           <p>
-            例如匯率為 0.20 時，22,000 日幣的換算方式為：
+            例如匯率為 0.20 時，10,000 日幣的換算方式為：
           </p>
 
           <p className="font-medium text-[var(--jp-ink)]">
-            22,000 × 0.20 ＝ 4,400 元台幣
+            10,000 × 0.20 ＝ 2,000 元台幣
           </p>
 
           <p>
-            以上只是示範計算。實際換匯或刷卡時，應以交易當下適用的匯率及相關費用為準。
+            實際換現金或刷卡時，用的匯率和手續費都不太一樣，下面有整理。
           </p>
         </ContentCard>
 
-        <ContentCard title="常見日幣匯率參考">
+        <ContentCard title="常見金額換算表">
           <p>
-            為了方便估算日本旅遊與購物預算，可以使用不同匯率試算同一筆日幣金額。
-            以下僅作為計算示例，不代表即時市場匯率。
+            表格用你在上方輸入的匯率計算，改了匯率，表格會跟著更新。最右邊一欄加上台灣多數信用卡的 1.5% 海外交易手續費，是在日本刷卡大約會付的台幣。
           </p>
 
           <DataTable
-            headers={["日幣", "匯率 0.20", "匯率 0.21", "匯率 0.22"]}
-            rows={[
-              [formatNumber(10000), "2,000", "2,100", "2,200"],
-              [formatNumber(22000), "4,400", "4,620", "4,840"],
-              [formatNumber(50000), "10,000", "10,500", "11,000"],
-              [formatNumber(100000), "20,000", "21,000", "22,000"],
+            fit
+            headers={[
+              "日幣",
+              `台幣（匯率 ${tableRateLabel}）`,
+              "刷卡加 1.5% 手續費",
             ]}
-          />
-
-          <p>
-            實際匯率每天可能變動，若是信用卡消費，也可能與單純使用市場匯率換算的結果不同。
-          </p>
-        </ContentCard>
-
-        {/* Step 2：Search Console 實際高曝光金額 */}
-        <ContentCard title="熱門日幣金額快速換算">
-          <p>
-            以下整理日本旅遊與購物常見的日幣金額，方便快速估算台幣價格。
-            表格以匯率 0.20 作為示例。
-          </p>
-
-          <DataTable
-            headers={["日幣金額", "台幣約多少？"]}
-            rows={REFERENCE_FAQS.map((r) => [
-              `${formatNumber(r.yen)} 日幣`,
-              `${formatNumber(r.twd)} 元台幣`,
+            rows={YEN_TWD_TABLE.map((y) => [
+              formatNumber(y),
+              formatNumber(y * tableRate),
+              formatNumber(y * tableRate * (1 + CARD_FEE)),
             ])}
           />
 
           <p className="text-sm text-[var(--jp-ink-muted)]">
-            以上結果以 1 日幣 = 0.20 台幣計算。實際金額請依交易當日匯率重新換算。
+            5,500 日幣：10% 的商品含稅 5,500 日幣，未稅剛好 5,000 日幣，就到免稅門檻（同一天、同一家店的未稅合計）。8% 的食品是含稅 5,400 日幣。詳細可以看{" "}
+            <Link href="/japan-tax-8-vs-10" className={linkClass}>
+              日本消費稅 8% 與 10% 差異
+            </Link>
+            。
           </p>
         </ContentCard>
 
-        <ContentCard title="日本購物熱門金額換算">
-          <div className="space-y-4">
-            {REFERENCE_FAQS.slice(0, 6).map((r) => (
-              <div
-                key={r.yen}
-                className="rounded-2xl border border-[var(--jp-border)] p-4"
-              >
-                <p className="font-medium text-[var(--jp-ink)]">
-                  {formatNumber(r.yen)} 日幣等於多少台幣？
-                </p>
-
-                <p className="mt-1">
-                  以匯率 0.20 計算，{formatNumber(r.yen)} 日幣約等於{" "}
-                  {formatNumber(r.twd)} 元台幣。
-                </p>
-              </div>
-            ))}
-          </div>
-        </ContentCard>
-
-        <ContentCard title="常見日本購物價格換算表">
+        <ContentCard title="網路上查到的匯率，和實際付的不一樣">
           <p>
-            以下以匯率 0.20 為例進行試算，方便日本旅遊與購物時快速估算。
-            實際匯率請以交易當下適用的銀行、信用卡或換匯管道為準。
+            Google 或新聞上看到的日幣匯率是市場的參考匯率。真的換錢或刷卡時，用的是銀行或信用卡國際組織的匯率，有時還要加手續費，所以本頁的匯率可以自己改。
           </p>
 
-          <DataTable
-            headers={["日幣", "台幣（0.20 匯率）"]}
-            rows={YEN_TWD_TABLE.map((y) => [
-              formatNumber(y),
-              formatNumber(y * 0.2),
-            ])}
-          />
-        </ContentCard>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              <b className={strong}>在台灣換日幣現鈔</b>
+              ：看銀行牌告匯率「現金匯率」底下的「本行賣出」。現鈔的匯率會比即期匯率高一點，例如 2026 年 10 月 17 日上午，臺灣銀行的日圓現金賣出是 0.2082，即期賣出是 0.2072。
+            </li>
+            <li>
+              <b className={strong}>在日本刷卡</b>
+              ：用 Visa、Mastercard、JCB 等國際組織在結匯日的匯率換成台幣，再加上海外交易手續費。台灣多數信用卡是 1.5%（國際組織 1% 加發卡銀行 0.5%）。
+            </li>
+            <li>
+              <b className={strong}>刷卡時選台幣（DCC）</b>
+              ：匯率由店家那邊決定，1.5% 一樣照收，通常比選日圓貴。原因和例子可以看{" "}
+              <Link href="/blog/dcc-yen-or-twd" className={linkClass}>
+                在日本刷卡選日圓還是台幣
+              </Link>
+              。
+            </li>
+          </ul>
 
-        {/* Step 3：FAQ 對準實際搜尋意圖 */}
-        <ContentCard title="日幣換台幣常見問題">
-          <FaqItem
-            q="22000日幣等於多少台幣？"
-            a="以 1 日幣 = 0.20 台幣計算，22,000 日幣約等於 4,400 元台幣。實際金額會依交易當下匯率變動。"
-          />
-
-          <FaqItem
-            q="24200日幣台幣多少？"
-            a="以匯率 0.20 計算，24,200 日幣約等於 4,840 元台幣。"
-          />
-
-          <FaqItem
-            q="3990日幣等於多少台幣？"
-            a="以匯率 0.20 計算，3,990 日幣約等於 798 元台幣。"
-          />
-
-          <FaqItem
-            q="50000日幣多少台幣？"
-            a="以匯率 0.20 計算，50,000 日幣約等於 10,000 元台幣。"
-          />
-
-          <FaqItem
-            q="10780日幣等於多少台幣？"
-            a="以匯率 0.20 計算，10,780 日幣約等於 2,156 元台幣。"
-          />
-
-          <FaqItem
-            q="5990日幣是多少台幣？"
-            a="以匯率 0.20 計算，5,990 日幣約等於 1,198 元台幣。"
-          />
-
-          <FaqItem
-            q="34100日幣等於多少台幣？"
-            a="以匯率 0.20 計算，34,100 日幣約等於 6,820 元台幣。"
-          />
-
-          <FaqItem
-            q="42500日幣等於多少台幣？"
-            a="以匯率 0.20 計算，42,500 日幣約等於 8,500 元台幣。"
-          />
-
-          <FaqItem
-            q="24750日幣等於多少台幣？"
-            a="以匯率 0.20 計算，24,750 日幣約等於 4,950 元台幣。"
-          />
-
-          <FaqItem
-            q="17400日幣等於多少台幣？"
-            a="以匯率 0.20 計算，17,400 日幣約等於 3,480 元台幣。"
-          />
-
-          <FaqItem
-            q="日幣匯率 0.20 怎麼算？"
-            a="日幣金額乘以 0.20 即可得到約略台幣金額。例如 50,000 日幣 × 0.20 = 10,000 元台幣。"
-          />
-
-          <FaqItem
-            q="日本刷卡匯率怎麼算？"
-            a={
-              <>
-                日本刷卡的實際台幣成本通常不只是日幣金額乘以單一匯率，
-                還可能受到 Visa 或 Mastercard 的匯率、發卡銀行海外交易手續費，
-                以及部分店家的退稅手續費影響。因此刷卡後的實際成本可能與單純的日幣台幣換算不同。
-              </>
-            }
-          />
-
-          <FaqItem
-            q="去日本刷卡還是換現金比較划算？"
-            a="沒有所有情況都適用的單一答案。比較時可以同時考慮信用卡匯率、海外交易手續費、現金換匯成本，以及日本商店是否接受信用卡。"
-          />
+          <p>
+            想估要帶多少現金，可以看{" "}
+            <Link href="/blog/how-much-yen-cash" className={linkClass}>
+              去日本要換多少日幣
+            </Link>
+            ；信用卡的手續費不是 1.5% 的話，用{" "}
+            <Link href="/japan-card-fee" className={linkClass}>
+              海外刷卡手續費計算機
+            </Link>
+            換成自己的費率。
+          </p>
         </ContentCard>
 
         <ContentCard title="日本購物時，除了匯率還要注意什麼？">
@@ -349,6 +269,25 @@ export default function YenToTwd() {
             因此，如果你是在規劃日本購物預算，建議先用本頁換算日幣與台幣，
             再搭配其他工具估算退稅與刷卡相關成本。
           </p>
+        </ContentCard>
+
+        <ContentCard title="日幣換台幣常見問題">
+          {FAQS.map((f) => (
+            <FaqItem key={f.q} q={f.q} a={f.a} />
+          ))}
+        </ContentCard>
+
+        <ContentCard title="參考來源">
+          <ul className="list-disc space-y-1 pl-5">
+            {SOURCES.map((s) => (
+              <li key={s.href}>
+                <a href={s.href} target="_blank" rel="noreferrer" className={linkClass}>
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p>以上依 2026 年 10 月查到的銀行官網資料整理，實際匯率和手續費以各銀行的公告為準。</p>
         </ContentCard>
 
         <ContentCard title="相關工具">
