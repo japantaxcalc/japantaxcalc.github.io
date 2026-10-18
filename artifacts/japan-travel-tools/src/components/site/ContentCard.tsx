@@ -33,16 +33,19 @@ export function Section({ children }: { children: ReactNode }) {
   );
 }
 
+// fit: no minimum width, for short number tables that fit a phone screen without scrolling
 export function DataTable({
   headers,
   rows,
+  fit = false,
 }: {
   headers: string[];
   rows: (string | number)[][];
+  fit?: boolean;
 }) {
   return (
     <div className="overflow-x-auto rounded-xl border border-[var(--jp-border)]">
-      <table className="w-full min-w-[420px] border-collapse text-left text-sm">
+      <table className={`w-full ${fit ? "" : "min-w-[420px]"} border-collapse text-left text-sm`}>
         <thead>
           <tr className="bg-[var(--jp-accent-soft)]">
             {headers.map((h) => (
