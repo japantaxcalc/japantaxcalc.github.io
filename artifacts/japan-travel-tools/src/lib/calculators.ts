@@ -125,7 +125,5 @@ export function calcYenToTwd(yen: number, rate: number): number {
 
 export const CARD_FEE_TABLE = [10000, 22000, 30000, 50000, 100000];
 
-export const YEN_TWD_TABLE = [
-  1000, 3000, 3990, 5000, 5990, 10000, 10780, 17400, 20000, 22000, 24200, 24750, 30000, 34100,
-  42500, 50000, 50600, 100000,
-];
+// 5500：10% 商品含稅 5,500 日圓＝未稅 5,000 日圓，剛好到免稅門檻
+export const YEN_TWD_TABLE = [1000, 3000, 5000, 5500, 10000, 20000, 30000, 50000, 100000];
