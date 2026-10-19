@@ -137,11 +137,18 @@ export default function About() {
         </ContentCard>
 
         <ContentCard title="廣告與收入">
+          <p>網站的工具和文章都免費使用，收入來源有兩種：</p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              <b>Google AdSense 廣告</b>：由第三方系統自動顯示，不代表我推薦其中的商品或服務。
+            </li>
+            <li>
+              <b>KKday 聯盟連結</b>：部分文章會放 KKday 的行程連結，透過連結訂購，我會收到一點佣金，不會讓你多付錢。有這種連結的文章，開頭都會註明。
+            </li>
+          </ul>
+          <p>廣告和聯盟連結都不會影響文章內容與計算結果，計算工具的頁面也不放聯盟連結。</p>
           <p>
-            網站的工具和文章都免費使用，營運費用來自 Google AdSense 廣告。廣告由第三方系統自動顯示，不代表我推薦其中的商品或服務，也不會影響文章內容與計算結果。
-          </p>
-          <p>
-            廣告如何使用 Cookie，請看
+            廣告和聯盟連結如何使用 Cookie，請看
             <Link href="/privacy" className={linkClass}>
               隱私政策
             </Link>
