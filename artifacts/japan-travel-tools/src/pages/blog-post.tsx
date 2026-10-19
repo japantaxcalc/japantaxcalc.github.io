@@ -7,8 +7,11 @@ import ContentCard, { Section } from "@/components/site/ContentCard";
 import NotFound from "@/pages/not-found";
 import { TOOLS } from "@/data/site";
 import { BLOG_POSTS, findPost } from "@/data/blog";
-import { MarkdownBlocks, parseSections } from "@/lib/markdown";
+import { MarkdownBlocks, hasKkdayLink, parseSections } from "@/lib/markdown";
 import { articleJsonLd, useSeo } from "@/lib/seo";
+
+// shown at the top of every post that has a KKday link
+const AFFILIATE_NOTE = "本篇含 KKday 聯盟連結，透過連結訂購，我會收到一點佣金，不會讓你多付錢。如果覺得這篇有幫助，可以透過連結訂購 :)";
 
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const post = findPost(params.slug);
@@ -51,6 +54,12 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       />
 
       <Section>
+        {hasKkdayLink(post.body) && (
+          <p className="rounded-2xl border border-[var(--jp-border)] bg-[var(--jp-card)] px-5 py-3 text-sm text-[var(--jp-ink-muted)]">
+            {AFFILIATE_NOTE}
+          </p>
+        )}
+
         {post.image && (
           <figure className="overflow-hidden rounded-3xl border border-[var(--jp-border)] bg-[var(--jp-card)]">
             <img src={post.image} alt={post.imageAlt ?? ""} width={1280} height={720} className="h-auto w-full" />
