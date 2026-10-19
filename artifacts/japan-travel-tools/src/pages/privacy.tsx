@@ -18,7 +18,7 @@ export default function Privacy() {
   useSeo({
     title: "隱私政策",
     description:
-      "日本旅遊工具箱隱私政策：計算工具不收集你輸入的資料、Google AdSense 廣告 Cookie 的使用方式與停用個人化廣告的方法，以及歐洲訪客的 Cookie 同意訊息。",
+      "日本旅遊工具箱隱私政策：計算工具不收集你輸入的資料、Google AdSense 廣告 Cookie 的使用方式與停用個人化廣告的方法、KKday 聯盟連結，以及歐洲訪客的 Cookie 同意訊息。",
   });
 
   return (
@@ -61,6 +61,21 @@ export default function Privacy() {
             </li>
           </ul>
           <p>你也可以透過瀏覽器設定，封鎖或清除 Cookie。</p>
+        </ContentCard>
+
+        <ContentCard title="KKday 聯盟連結">
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              部分文章有 KKday 的聯盟連結。點了連結之後，KKday 會在它的網站用 Cookie 記錄你是從本站過去的，有效期 30
+              天，用來計算佣金。本站不會因此在你的瀏覽器設定 Cookie。
+            </li>
+            <li>我在 KKday 的後台只看得到訂單本身的資訊，看不到訂購人的姓名、Email 等個人資料。</li>
+            <li>
+              你在 KKday 訂購時提供的資料，由 KKday 依它的{" "}
+              <ExternalLink href="https://www.kkday.com/static/zh-tw/about/privacy.html">隱私權保護政策</ExternalLink>{" "}
+              處理。
+            </li>
+          </ul>
         </ContentCard>
 
         <ContentCard title="歐洲經濟區、英國與瑞士的訪客">
