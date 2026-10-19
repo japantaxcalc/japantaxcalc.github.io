@@ -74,6 +74,8 @@ Outlet攻略來啦！哈囉我是Miff！台灣真的越來越多日系Outlet了�
 
 桑名站也有巴士，單程 650 日圓。官網寫明**中部國際機場到長島的直達巴士目前停駛**，從中部機場過去要在名古屋站轉車，大約 80 分鐘。從中部機場回國的話，長島排在旅程中段比較不會趕。
 
+不想自己搭巴士的話，也有從名古屋出發的一日遊，例如 [KKday 的長島 Outlet 一日遊](https://www.kkday.com/zh-tw/product/701400?cid=27530&ud1=kansaichubu&ud2=nagashima)：JR 名古屋站前集合，A 方案在 Outlet 停留約 4.5 小時，之後去長島溫泉（溫泉費用自理）。購物時間算充裕，想專心逛的人可以參考。方案內容和停留時間有時會調整，訂之前再看一次行程頁喔 ♨️
+
 長島官網也寫到，可以用 PIE VAT App 在旅遊資訊及免稅櫃台辦理退稅手續。
 
 ## 出發前的小清單
@@ -100,4 +102,4 @@ Outlet攻略來啦！哈囉我是Miff！台灣真的越來越多日系Outlet了�
 - [日本觀光廳：Japan's Tax-Free Shopping System for Visitors: Refund Method Explained](https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html)
 - [日本國稅廳：外国人旅行者等が国外へ持ち帰る物品についての輸出免税（消耗品 30 日以內出口）](https://www.keisan.nta.go.jp/r4yokuaru/shohizei/shohizeishikumi/yushutsuyunyu/mochikaerihin.html)
 
-以上依 2026 年 10 月查到的官方資料整理，實際店舖、交通和營業時間以各官方單位和店家的公告為準。
+以上依 2026 年 10 月查到的官方資料整理（一日遊的集合地點和停留時間依 KKday 行程頁），實際店舖、交通和營業時間以各官方單位和店家的公告為準。
