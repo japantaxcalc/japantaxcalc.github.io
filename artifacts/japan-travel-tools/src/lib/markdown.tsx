@@ -89,6 +89,20 @@ export function parseSections(body: string): MdSection[] {
 
 const linkClass = "font-medium text-[var(--jp-accent)] underline";
 
+// KKday affiliate links (KKpartners). Write a normal [text](https://www.kkday.com/...) link in the post:
+// it is marked rel="sponsored" for Google, keeps the referrer, and gets Miff's CID if the link has none.
+const KKDAY_CID = "27530";
+const isKkday = (href: string) => /^https:\/\/(www\.)?kkday\.com\//.test(href);
+
+function kkdayHref(href: string) {
+  const url = new URL(href);
+  if (!url.searchParams.has("cid")) url.searchParams.set("cid", KKDAY_CID);
+  return url.toString();
+}
+
+// true when a post links to KKday, so the post shows the affiliate note at the top
+export const hasKkdayLink = (body: string) => /\]\(https:\/\/(www\.)?kkday\.com\//.test(body);
+
 export function Inline({ text }: { text: string }) {
   const parts: ReactNode[] = [];
   const re = /\*\*([^*]+)\*\*|\[([^\]]+)\]\(([^)\s]+)\)/g;
@@ -107,6 +121,12 @@ export function Inline({ text }: { text: string }) {
         <Link key={m.index} href={m[3]!} className={linkClass}>
           {m[2]}
         </Link>,
+      );
+    } else if (isKkday(m[3]!)) {
+      parts.push(
+        <a key={m.index} href={kkdayHref(m[3]!)} target="_blank" rel="sponsored noopener" className={linkClass}>
+          {m[2]}
+        </a>,
       );
     } else {
       parts.push(
