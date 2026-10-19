@@ -48,6 +48,10 @@ export default function Disclaimer() {
           <p>
             本站連到的外部網站，內容由各網站自行負責。頁面上的廣告由 Google AdSense 等第三方提供，不代表本站推薦或保證其商品與服務。
           </p>
+          <p>
+            部分文章有 KKday 聯盟連結。行程內容、價格、集合時間與取消規定，以 KKday 行程頁的說明為準；訂購與售後服務由 KKday
+            和行程業者負責。
+          </p>
         </ContentCard>
 
         <ContentCard title="責任限制">
