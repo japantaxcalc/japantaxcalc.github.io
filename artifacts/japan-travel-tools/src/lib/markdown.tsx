@@ -3,13 +3,17 @@ import { Link } from "wouter";
 
 // A small Markdown reader for the blog posts in src/content/blog.
 // It only supports what the posts use: "## " sections, paragraphs, "- " and "1. " lists,
-// tables, **bold** and [links](/path). Edit the .md files on GitHub and the pages update.
+// tables, **bold**, [links](/path) and images on their own line. Edit the .md files on GitHub and the pages update.
 
 export type Block =
   | { type: "p"; text: string }
   | { type: "h3"; text: string }
+  | { type: "img"; src: string; alt: string; caption?: string }
   | { type: "ul" | "ol"; items: string[] }
   | { type: "table"; head: string[]; rows: string[][] };
+
+// ![what the image shows](/blog/file.png "caption shown under it"); the caption is optional
+const IMAGE = /^!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]*)")?\)$/;
 
 export interface MdSection {
   title?: string;
@@ -56,6 +60,7 @@ export function parseSections(body: string): MdSection[] {
 
   for (const raw of body.split("\n")) {
     const line = raw.trimEnd();
+    const image = line.match(IMAGE);
     if (line.startsWith("## ")) {
       flush();
       current = { title: line.slice(3).trim(), blocks: [] };
@@ -63,6 +68,9 @@ export function parseSections(body: string): MdSection[] {
     } else if (line.startsWith("### ")) {
       flush();
       current.blocks.push({ type: "h3", text: line.slice(4).trim() });
+    } else if (image) {
+      flush();
+      current.blocks.push({ type: "img", alt: image[1]!, src: image[2]!, caption: image[3] });
     } else if (line.trim() === "") {
       flush();
     } else if (line.startsWith("|")) {
@@ -156,6 +164,16 @@ export function MarkdownBlocks({ blocks }: { blocks: Block[] }) {
             <h3 key={i} className="font-semibold text-[var(--jp-ink)]">
               <Inline text={b.text} />
             </h3>
+          );
+        if (b.type === "img")
+          return (
+            <figure key={i} className="overflow-hidden rounded-xl border border-[var(--jp-border)] bg-[var(--jp-paper)]">
+              {/* screenshots are small at phone width, so a tap opens the full-size image */}
+              <a href={b.src} target="_blank" className="block">
+                <img src={b.src} alt={b.alt} loading="lazy" decoding="async" className="mx-auto h-auto max-w-full" />
+              </a>
+              {b.caption && <figcaption className="px-5 py-3 text-xs text-[var(--jp-ink-faint)]">{b.caption}</figcaption>}
+            </figure>
           );
         if (b.type !== "table") {
           const List = b.type;
