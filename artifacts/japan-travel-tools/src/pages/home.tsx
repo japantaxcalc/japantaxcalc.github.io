@@ -34,10 +34,13 @@ const FAQS = [
       </>
     ),
   },
-  { q: "百貨公司為什麼退不到 10%？", a: "部分百貨公司會收取約 1%~1.55% 退稅手續費。" },
+  {
+    q: "百貨公司為什麼退不到 10%？",
+    a: "因為退稅會扣手續費。2026 年 11 月 1 日起的新制，高島屋、大丸東京店官網寫的手續費約是未稅價的 2.3%；10 月 31 日以前購買的，百貨公司多收約 1%~1.55%。",
+  },
   {
     q: "信用卡海外交易會加價嗎？",
-    a: "大部分銀行會收取約 1%~2% 海外交易手續費。2026 年 11 月 1 日起的新制要先付含稅價，手續費會用含稅金額計算。",
+    a: "會。台灣多數信用卡刷外幣收 1.5% 海外交易手續費（國際組織 1% ＋ 發卡銀行 0.5%）。2026 年 11 月 1 日起的新制要先付含稅價，手續費會用含稅金額計算。",
   },
   {
     q: "日本退稅最低門檻是多少？",
@@ -166,9 +169,16 @@ export default function Home() {
                 className="mt-1.5 w-full rounded-lg border border-[var(--jp-border)] bg-[var(--jp-paper)] px-3 py-2.5 text-[var(--jp-ink)] outline-none focus:border-[var(--jp-ink)]"
               />
               <p className="mt-1 text-xs text-[var(--jp-ink-faint)]">
-                {system === "new"
-                  ? "新制的手續費看各店或退款業者公告；不確定的話，可以先用 0%～1.55% 估算"
-                  : "常見手續費：藥妝店 0%、百貨公司約 1.55%、部分商店 1%~2%"}
+                {system === "new" ? (
+                  <>
+                    新制手續費看各店：唐吉訶德 0%，高島屋、大丸東京店約 2.3%。
+                    <Link href="/blog/tax-refund-card-or-cash" className="underline">
+                      各店整理
+                    </Link>
+                  </>
+                ) : (
+                  "常見手續費：藥妝店 0%、百貨公司約 1.55%、部分商店 1%~2%"
+                )}
               </p>
             </div>
             <div>
@@ -180,7 +190,7 @@ export default function Home() {
                 className="mt-1.5 w-full rounded-lg border border-[var(--jp-border)] bg-[var(--jp-paper)] px-3 py-2.5 text-[var(--jp-ink)] outline-none focus:border-[var(--jp-ink)]"
               />
               <p className="mt-1 text-xs text-[var(--jp-ink-faint)]">
-                {system === "new" ? "海外刷卡通常約 1%~2%，新制用含稅金額計算" : "海外刷卡通常約 1%~2%"}
+                {system === "new" ? "台灣多數信用卡是 1.5%，新制用含稅金額計算" : "台灣多數信用卡是 1.5%"}
               </p>
             </div>
             <div>
@@ -334,10 +344,17 @@ export default function Home() {
             <li>8% 稅率：含稅價格 ÷ 1.08 = 未稅價格</li>
           </ul>
           <p>
-            部分百貨公司可能收取約 1.55% 退稅手續費，海外信用卡也可能收取 1%~2% 交易手續費。
+            退稅手續費看店家：2026 年 11 月 1 日起的新制，唐吉訶德不收，高島屋、大丸東京店約是未稅價的 2.3%。台灣多數信用卡刷外幣，也會再收 1.5% 海外交易手續費。
           </p>
           <p>
             要注意的是，2026 年 11 月 1 日起改成「先付後退」：結帳先付含稅價，出境時在機場或港口完成海關確認後才退稅。刷卡的話，海外手續費會用含稅金額計算，先付的金額也比較高，大筆購物前記得確認一下信用卡額度喔 💳
+          </p>
+          <p>
+            退到信用卡還是在機場領現金、各店手續費多少，我整理在
+            <Link href="/blog/tax-refund-card-or-cash" className="font-medium text-[var(--jp-accent)] underline">
+              日本退稅新制：退到信用卡還是領現金？
+            </Link>
+            。
           </p>
           <p>本工具可快速計算：</p>
           <ul className="list-disc space-y-1 pl-5">
