@@ -81,7 +81,7 @@ export default function ShoppingTripEstimator() {
   const [items, setItems] = useState<LineItem[]>([
     makeItem({ name: "藥妝店保養品", price: "8800", shopFeePercent: "0" }),
     makeItem({ name: "唐吉訶德零食伴手禮", price: "5200", taxRateDivisor: 1.08, shopFeePercent: "0" }),
-    makeItem({ name: "百貨公司包包", price: "34100", shopFeePercent: "1.55" }),
+    makeItem({ name: "百貨公司包包", price: "34100", shopFeePercent: "2.3" }),
   ]);
   const [cardFeePercent, setCardFeePercent] = useState("1.5");
   const [exchangeRate, setExchangeRate] = useState("0.20");
@@ -169,7 +169,11 @@ export default function ShoppingTripEstimator() {
               <RefundSystemToggle value={system} onChange={setSystem} />
             </div>
             <p className="mt-1 text-xs text-[var(--jp-ink-faint)]">
-              門檻是同一天、同一家店未稅合計 5,000 日圓，同一家店買的東西可以合成一筆輸入。
+              門檻是同一天、同一家店未稅合計 5,000 日圓，同一家店買的東西可以合成一筆輸入。新制的退稅手續費看各店：唐吉訶德 0%，高島屋、大丸東京店約 2.3%（
+              <Link href="/blog/tax-refund-card-or-cash" className="underline">
+                各店整理
+              </Link>
+              ）。
             </p>
           </div>
           <div className="space-y-4">
@@ -290,7 +294,7 @@ export default function ShoppingTripEstimator() {
                 className="mt-1.5 w-full rounded-lg border border-[var(--jp-border)] bg-[var(--jp-paper)] px-3 py-2.5 text-[var(--jp-ink)] outline-none focus:border-[var(--jp-ink)]"
               />
               <p className="mt-1 text-xs text-[var(--jp-ink-faint)]">
-                {system === "new" ? "海外刷卡通常約 1%~2%，新制用含稅金額計算" : "海外刷卡通常約 1%~2%"}
+                {system === "new" ? "台灣多數信用卡是 1.5%，新制用含稅金額計算" : "台灣多數信用卡是 1.5%"}
               </p>
             </div>
             <div>
