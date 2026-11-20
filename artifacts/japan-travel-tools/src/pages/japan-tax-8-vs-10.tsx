@@ -47,7 +47,7 @@ export default function JapanTax8Vs10() {
         headline: "日本消費稅 8% 與 10% 差在哪？",
         description: "外帶內用、食品、酒類與藥妝的稅率整理，含稅標價怎麼看、退稅怎麼算，以及 2027 年起食品可能降到 1% 的方案。",
         published: "2026-06-08",
-        modified: "2026-10-05",
+        modified: "2026-11-05",
       }),
       {
         "@context": "https://schema.org",
@@ -68,7 +68,7 @@ export default function JapanTax8Vs10() {
         title="日本消費稅 8% 與 10% 差在哪？"
         description="同一家店的收據上為什麼有兩種稅率？外帶內用、食品、酒類、藥妝怎麼分，還有 2027 年食品可能降到 1% 的最新消息，一次整理給你 🍙"
         author="Miff"
-        updated="2026年10月"
+        updated="2026年11月"
       />
 
       <Section>
@@ -151,8 +151,12 @@ export default function JapanTax8Vs10() {
             例如 1,080 日圓的零食（8%），未稅價 1,000 日圓、稅金 80 日圓；1,100 日圓的保養品（10%），未稅價 1,000 日圓、稅金 100 日圓。
           </p>
           <p>
-            免稅門檻看的是同一天、同一家店的<b className={strong}>未稅合計</b>是否滿 5,000 日圓，不分 8% 或 10%。另外，部分百貨公司會收 1.1%
-            到 1.55% 的退稅手續費，所以實際拿回來不一定剛好是 10%。
+            免稅門檻看的是同一天、同一家店的<b className={strong}>未稅合計</b>是否滿 5,000 日圓，不分 8% 或 10%。另外，退稅會扣手續費：11
+            月 1 日起的新制，高島屋、大丸東京店約是未稅價的 2.3%，唐吉訶德不收，所以實際拿回來不一定剛好是 10%。各店的手續費整理在
+            <Link href="/blog/tax-refund-card-or-cash" className={linkClass}>
+              退到信用卡還是領現金？
+            </Link>
+            。
           </p>
           <p>2026 年 11 月 1 日起的退稅新制，改變的是退稅的流程，8% 和 10% 的稅率本身沒有變。</p>
         </ContentCard>
