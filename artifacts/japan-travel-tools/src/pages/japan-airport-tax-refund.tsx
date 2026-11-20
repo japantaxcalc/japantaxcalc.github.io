@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: "日本退稅會退現金嗎？",
-    a: "看店家。日本觀光廳列出的方式有銀行轉帳、退回信用卡、App 退款，以及在出境港完成海關確認後領現金。",
+    a: "看店家和機場。日本觀光廳列出的方式有銀行轉帳、退回信用卡、App 退款，以及在出境港完成海關確認後領現金。機場的現金退稅機只有成田、羽田、關西、神戶、中部、福岡、新千歲、那霸 8 座機場有，只付日圓，而且要店家合作的退款業者有支援才能領。",
   },
   {
     q: "日本退稅需要多久？",
@@ -46,6 +46,8 @@ const SOURCES = [
     label: "日本觀光廳：退稅新制旅客說明單張（繁體中文 PDF）",
   },
   { href: "https://services.digital.go.jp/en/visit-japan-web/", label: "日本數位廳：Visit Japan Web" },
+  { href: "https://www.cashjapan.com/ja/get-your-refund/", label: "Cash Japan：日本で税関確認を受ける（6 座機場的現金退稅櫃台）" },
+  { href: "https://www.glory.co.jp/selftaxrefund/", label: "Self Tax Refund：ご利用可能な空港（羽田、成田、那霸）" },
 ];
 
 export default function JapanAirportTaxRefund() {
@@ -59,7 +61,7 @@ export default function JapanAirportTaxRefund() {
         headline: "日本機場退稅流程｜2026 最新教學",
         description: "11/1 以後購買的免稅品要在托運前完成海關確認。整理機場流程、Visit Japan Web、時間安排與常見問題。",
         published: "2026-06-08",
-        modified: "2026-10-05",
+        modified: "2026-11-05",
       }),
       {
         "@context": "https://schema.org",
@@ -80,7 +82,7 @@ export default function JapanAirportTaxRefund() {
         title="日本機場退稅流程｜2026 最新教學"
         description="11/1 以後買的免稅品，一定要在機場托運前完成海關確認才能退稅。終端機在哪、綠燈紅燈什麼意思、要提早多久到，這篇一次說清楚 ✈️"
         author="Miff"
-        updated="2026年10月"
+        updated="2026年11月"
       />
 
       <Section>
@@ -96,7 +98,7 @@ export default function JapanAirportTaxRefund() {
             </li>
           </ul>
           <p>
-            這篇主要講 11/1 以後的新流程。一樣先說，我還沒有實際在機場跑過新制流程，以下都是照日本觀光廳的公告整理的，來源附在最下面。
+            這篇主要講 11/1 以後的新流程。一樣先說，我自己沒有在日本辦過退稅，以下都是照日本觀光廳的公告和機場、退款業者的官網整理的，來源附在最下面。
           </p>
           <p>
             想先算算這次能退多少，可以用
@@ -136,8 +138,18 @@ export default function JapanAirportTaxRefund() {
           </p>
           <p className={`font-medium ${strong}`}>Step 4：完成後再報到、托運</p>
           <p>海關確認（包括查驗）必須在登機手續完成前做完，確認完成後就可以去報到、托運行李。</p>
-          <p className={`font-medium ${strong}`}>Step 5：等店家退款</p>
-          <p>海關確認後，由購買的免稅店或店家委託的退款業者退稅。退款方式和時間，以購買時店家的說明為準。</p>
+          <p className={`font-medium ${strong}`}>Step 5：拿退稅款</p>
+          <p>
+            海關確認後，由購買的免稅店或店家委託的退款業者退稅。選退回信用卡、銀行或 App 的，出境後等業者處理就好，退款時間以購買時店家的說明為準。
+          </p>
+          <p>
+            想在機場領現金的話，要到現金退稅機或櫃台辦。2026 年 11 月上路時，只有成田、羽田、關西、神戶、中部、福岡、新千歲、那霸 8
+            座機場有，只付日圓，而且只能領店家合作的退款業者有支援的那幾筆。各機場的機台在哪、幾點開，我整理在
+            <Link href="/blog/tax-refund-card-or-cash" className={linkClass}>
+              退到信用卡還是領現金？
+            </Link>
+            。
+          </p>
           <p>
             小建議：免稅品可以集中放在一個袋子或登機箱裡。萬一抽到紅燈要查驗，就不用在報到櫃台前面打開大行李箱翻來翻去了 😂
           </p>
@@ -190,7 +202,7 @@ export default function JapanAirportTaxRefund() {
 
         <ContentCard title="2026 日本退稅新制差異">
           <DataTable
-            headers={["項目", "現行（10/31 以前購買）", "新制（11/1 以後購買）"]}
+            headers={["項目", "舊制（10/31 以前購買）", "新制（11/1 以後購買）"]}
             rows={[
               ["結帳價格", "免稅價", "含稅價"],
               ["海關確認", "不需要另外辦", "出境時托運前，在終端機完成"],
@@ -226,6 +238,11 @@ export default function JapanAirportTaxRefund() {
               </Link>
             </li>
             <li>
+              <Link href="/blog/tax-refund-card-or-cash" className="text-[var(--jp-accent)] underline">
+                日本退稅新制：退到信用卡還是領現金？
+              </Link>
+            </li>
+            <li>
               <Link href="/japan-tax-8-vs-10" className="text-[var(--jp-accent)] underline">
                 日本 8% vs 10% 消費稅差異
               </Link>
@@ -248,7 +265,7 @@ export default function JapanAirportTaxRefund() {
               </li>
             ))}
           </ul>
-          <p>以上依 2026 年 10 月查到的官方公告整理。新制剛上路，各機場的實際動線如果有更新，我會再修改這篇。</p>
+          <p>以上依 2026 年 11 月查到的官方公告整理。新制剛上路，各機場的實際動線如果有更新，我會再修改這篇。</p>
         </ContentCard>
       </Section>
 
